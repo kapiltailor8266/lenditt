@@ -8,6 +8,13 @@ module.exports.getConnectionObject = () => {
     database: process.env.DATABASE_NAME || 'the-virtual-classroom',
     port: Number(process.env.PORT) || 3306
   });
-  connection.connect()
+  connection.connect(function (err) {
+    if(err){
+        console.log("error occured while connecting");
+    }
+    else{
+        console.log("connection created with Mysql successfully");
+    }
+ })
   return connection
 }
