@@ -19,7 +19,7 @@ app.use('/api', authRoutes, assignmentRoutes);
 
 
 // PORT
-const PORT = process.env.DATABASE_PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 
 app.listen(PORT,()=>{
