@@ -83,32 +83,32 @@ module.exports.getUser = async () => {
   }
 }
 
-module.exports.find = async (email) => {
-  let connection
-  try {
-    connection = getConnectionObject()
-    const queryString = utilPromise.promisify(connection.query).bind(connection)
-    if (!connection) throw new Error('Database connection not found')
+// module.exports.find = async (email) => {
+//   let connection
+//   try {
+//     connection = getConnectionObject()
+//     const queryString = utilPromise.promisify(connection.query).bind(connection)
+//     if (!connection) throw new Error('Database connection not found')
 
-    const query = `
-      SELECT 
-        *
-      FROM user
-      WHERE 
-      email =  '${email}'
-      `
+//     const query = `
+//       SELECT 
+//         *
+//       FROM user
+//       WHERE 
+//       email =  '${email}'
+//       `
 
-    console.log('query:', query)
+//     console.log('query:', query)
 
-    return await queryString(query)
+//     return await queryString(query)
 
-  } catch (err) {
-    console.log('err:', err)
-    throw err
-  } finally {
-    connection.end() // Closing DB Connection
-  }
-}
+//   } catch (err) {
+//     console.log('err:', err)
+//     throw err
+//   } finally {
+//     connection.end() // Closing DB Connection
+//   }
+// }
 
 module.exports.findById = async (tableName, id) => {
   let connection
@@ -466,6 +466,35 @@ module.exports.updateAll = async (tableName, condition, updateDoc) => {
     const query = `update ${tableName} 
       set ${makeDoc} where ${this.addSeparator(sets)}`
     console.log('query:', query)
+
+    try {
+      connection.query(query, (err, doc) => {
+        if (err) {
+          console.log(err)
+          reject(err)
+        } else resolve(doc)
+      })
+    } catch (err) {
+      console.log('err:', err)
+      reject(err)
+    } finally {
+      connection.end() // Closing DB Connection
+    }
+  })
+}
+
+module.exports.updateAll = async (email) => {
+  return new Promise(async (resolve, reject) => {
+    const connection = getConnectionObject()
+    if (!connection) throw new Error('Database connection not found')
+    
+    const query = `
+      SELECT 
+        *
+      FROM user
+      WHERE 
+      email =  '${email}'
+      `
 
     try {
       connection.query(query, (err, doc) => {
