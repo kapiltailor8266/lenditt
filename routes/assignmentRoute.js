@@ -116,7 +116,7 @@ router.post('/assignmentupdate', authenticateToken, async (req, res) => {
                 updateAll('assignment_student', { assignment_id: assignmentId, user_id: removeStudent }, removeObject)]
             )
 
-            return res.json({ success: "done" })
+            return res.json({ success: "Assignment update successfully." })
         }
     } else {
         return res.status(400).send(`Not authorized.`);

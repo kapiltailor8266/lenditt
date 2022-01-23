@@ -9,11 +9,8 @@ module.exports.filterAppointmentData = (data) => {
     for (const elem of data) {
         let json = JSON.parse(JSON.stringify(elem))
         const student = this.separateKeysFromObj(json, 'student__')
-
         json.student = student
-
         const index = _.findIndex(response, ['id', json.id])
-
         if (index === -1) {
             response.push(json)
         }

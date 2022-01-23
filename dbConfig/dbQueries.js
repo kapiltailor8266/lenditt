@@ -83,33 +83,6 @@ module.exports.getUser = async () => {
   }
 }
 
-// module.exports.find = async (email) => {
-//   let connection
-//   try {
-//     connection = getConnectionObject()
-//     const queryString = utilPromise.promisify(connection.query).bind(connection)
-//     if (!connection) throw new Error('Database connection not found')
-
-//     const query = `
-//       SELECT 
-//         *
-//       FROM user
-//       WHERE 
-//       email =  '${email}'
-//       `
-
-//     console.log('query:', query)
-
-//     return await queryString(query)
-
-//   } catch (err) {
-//     console.log('err:', err)
-//     throw err
-//   } finally {
-//     connection.end() // Closing DB Connection
-//   }
-// }
-
 module.exports.findById = async (tableName, id) => {
   let connection
   try {
