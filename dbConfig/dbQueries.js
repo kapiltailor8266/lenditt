@@ -483,7 +483,7 @@ module.exports.updateAll = async (tableName, condition, updateDoc) => {
   })
 }
 
-module.exports.updateAll = async (email) => {
+module.exports.find = async (email) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnectionObject()
     if (!connection) throw new Error('Database connection not found')
