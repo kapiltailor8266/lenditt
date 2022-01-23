@@ -105,6 +105,8 @@ module.exports.find = async (email) => {
   } catch (err) {
     console.log('err:', err)
     throw err
+  } finally {
+    connection.end() // Closing DB Connection
   }
 }
 
