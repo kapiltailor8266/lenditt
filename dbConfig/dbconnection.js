@@ -1,19 +1,15 @@
-const mysql = require('mysql')
+const Sequelize = require('sequelize');
+const dotenv = require('dotenv');
+dotenv.config();
 
-module.exports.getConnectionObject = () => {
-  var connection = mysql.createConnection({
-    host: process.env.DATABASE_HOST || '127.0.0.1',
-    user: process.env.DATABASE_USER || 'root',
-    password: process.env.DATABASE_PASSWORD || '',
-    database: process.env.DATABASE_NAME || 'the-virtual-classroom'
-  });
-  connection.connect(function (err) {
-    if(err){
-        console.log("error occured while connecting");
-    }
-    else{
-        console.log("connection created with Mysql successfully");
-    }
- })
-  return connection
-}
+module.exports =  new Sequelize(process.env.DATABASE_URL, {
+  host: 'localhost',
+  dialect: 'postgres',
+  operatorsAliases: false,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+})
