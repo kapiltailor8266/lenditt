@@ -35,8 +35,7 @@ router.get('/contact/', (req, res) => {
         });
       }).catch((err) => {
         res.json({
-          "Error": err.errors[0].message,
-          "User Message" : `${err.errors[0].value} is not unique.`
+          "Error": err
         })
       })
   }
