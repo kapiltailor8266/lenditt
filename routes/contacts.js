@@ -43,6 +43,8 @@ router.get('/contact/', (req, res) => {
           return err
        }
       })
+
+     return ; 
   }
   catch (err) {
    return res.send(err)
