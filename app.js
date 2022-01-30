@@ -11,12 +11,12 @@ const contactRoute = require('./routes/contacts')
 // Middleware
 app.use(morgan('dev'))
 app.use(express.json())
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({ extended: false }))
 
-
+// db connection
 db.authenticate()
-.then(() => console.log('Connection has been established successfully.'))
-.catch(err => console.error('Unable to connect to the database:', err))
+    .then(() => console.log('Connection has been established successfully.'))
+    .catch(err => console.error('Unable to connect to the database:', err))
 
 // middleware
 app.use('/', contactRoute)
@@ -24,6 +24,6 @@ app.use('/', contactRoute)
 // PORT
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log(`Server Started on Port ${PORT}`);
 });

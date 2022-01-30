@@ -1,4 +1,4 @@
-const {DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const db = require('../dbConfig/dbconnection');
 
 const Contacts = db.define('list', {

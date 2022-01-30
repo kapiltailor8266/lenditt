@@ -3,42 +3,43 @@ const router = express.Router();
 const Contacts = require('../models/Contacts');
 
 
-router.get('',(req,res)=>{
+router.get('', (req, res) => {
   res.send('Welcome to Lenditt.')
 })
 
 // Add Contact
 router.get('/contact/', (req, res) => {
   try {
-    // Split query string into array
-    let contactList = req.query.contacts.split(';')
+    // Parse array
+    let contactList = JSON.parse(req.query.contacts)
 
     let newArr = []
-    contactList.map(item => newArr.push(item.slice(-10).trim()))
+    contactList.map(item => newArr.push(item.trim().slice(-10).trim()))
 
+    // Unique contact array
     let uniqueContactList = [...new Set(newArr)]
 
     let makePayload = []
+
+    // make payload for insert query
     uniqueContactList.map((item) => {
-      if(item.length !== 10) return res.send('Phone number digits are more or less than 10.')
+      if (item.length !== 10) res.send('Phone number digits are more or less than 10.')
       makePayload.push({ phone_number: item })
     })
 
-    console.log('makePayload',makePayload)
-
-    // INSERT INTO TABLE
+    // INSERT INTO TABLE 
     Contacts.bulkCreate(makePayload)
       .then((item) => {
         res.json({
           "Message": "Contact added successfully.",
-          "Item": item
+          "Contacts": item
         });
       }).catch((err) => {
         res.send(err)
       })
   }
   catch (err) {
-    res.send(err)
+    res.send("Error while adding contact")
   }
 }
 )
