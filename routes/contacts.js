@@ -45,7 +45,7 @@ router.get('/contact/', (req, res) => {
       })
   }
   catch (err) {
-    res.send(err)
+   return res.send(err)
   }
 }
 )
