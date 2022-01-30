@@ -21,7 +21,7 @@ router.get('/contact/', (req, res) => {
     let makePayload = []
     uniqueContactList.map((item) => {
       if(item.length !== 10) return res.send('Phone number digits are more or less than 10.')
-      makePayload.push({ phone_number: Number(item) })
+      makePayload.push({ phone_number: item })
     })
 
     console.log('makePayload',makePayload)
@@ -34,20 +34,11 @@ router.get('/contact/', (req, res) => {
           "Item": item
         });
       }).catch((err) => {
-        if (err.name === 'SequelizeUniqueConstraintError') {
-          return res.json({
-            "Error": err.errors[0].message,
-            "User Message" : `${err.errors[0].value} is not unique.`
-          })
-      } else {
-          return err
-       }
+        res.send(err)
       })
-
-     return ; 
   }
   catch (err) {
-   return res.send(err)
+    res.send(err)
   }
 }
 )

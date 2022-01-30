@@ -2,13 +2,14 @@ const Sequelize = require('sequelize');
 const dotenv = require('dotenv');
 dotenv.config();
 
-console.log('process.env.DATABASE_URL',process.env.DATABASE_URL)
-
-module.exports = new Sequelize(process.env.DATABASE_URL, {
+module.exports =  new Sequelize(process.env.DATABASE_URL, {
+  host: 'localhost',
   dialect: 'postgres',
-  dialectOptions: {
-    ssl: {
-      rejectUnauthorized: false
-    }
-  }
+  operatorsAliases: false,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
 })

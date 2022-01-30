@@ -9,7 +9,7 @@ const Contacts = db.define('list', {
     autoIncrement: true
   },
   phone_number: {
-    type: DataTypes.INTEGER(10),
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true
   }
