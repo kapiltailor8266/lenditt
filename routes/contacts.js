@@ -34,9 +34,14 @@ router.get('/contact/', (req, res) => {
           "Item": item
         });
       }).catch((err) => {
-        res.json({
-          "Error": err   
-        })
+        if (err.name === 'SequelizeUniqueConstraintError') {
+          return res.json({
+            "Error": err.errors[0].message,
+            "User Message" : `${err.errors[0].value} is not unique.`
+          })
+      } else {
+          return err
+       }
       })
   }
   catch (err) {
